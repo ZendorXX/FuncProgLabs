@@ -4,11 +4,10 @@
 // series: 3x + 8x^2 + ... + n * (n + 2) * x^n
 // a = 0.0
 // b = 0.5
-let eps = 1e-3
+let eps = 1e-5
 
 // function to compute
 let f x = x * (3.0 - x) / (1.0 - x) ** 3.0
-
 let a = 0.0
 let b = 0.5
 let n = 10

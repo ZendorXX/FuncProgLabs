@@ -12,6 +12,12 @@ let a = 0.0
 let b = 0.5
 let n = 10
 
+let rec pow a n =
+    match n with 
+    | 0 -> 1.0
+    | 1 -> a
+    | n -> a * pow a (n - 1)
+
 let rec whileLoop condition body state = 
     if condition state then
         let newState = body state
@@ -21,7 +27,7 @@ let rec whileLoop condition body state =
 
 // Define a function to compute f using naive taylor series method
 let taylor_naive x = 
-    let curr n x = float n * (float n + 2.0) * x ** float n
+    let curr n x = float n * (float n + 2.0) * (pow x n)
 
     let condition (_, n) = curr n x > eps
     let body (acc, n) = ((curr n x) + acc, n + 1)
@@ -42,13 +48,13 @@ let taylor x =
     (acc, n)
 
 let main =
-    printfn "|  x  |  Builtin  | Smart Taylor | # terms | Dumb Taylor | # terms |"
-    printfn "|-----|-----------|--------------|---------|-------------|---------|"
+    printfn "|  x  |   Builtin  | Smart Taylor | # terms | Dumb Taylor | # terms |"
+    printfn "|-----|------------|--------------|---------|-------------|---------|"
     for i = 0 to n do
         let x = a + (float i) / (float n) * (b - a)
         let (smartTaylor_value, smartTaylor_terms) = taylor x
         let (dumbTaylor_value, dumbTaylor_terms) = taylor_naive x
-        printfn "|%5.2f| %10.6f | %10.6f | %5d | %10.6f | %5d |" x (f x) smartTaylor_value smartTaylor_terms dumbTaylor_value dumbTaylor_terms
+        printfn "|%5.2f| %10.6f |  %10.6f  | %5d   | %10.6f  | %5d   |" x (f x) smartTaylor_value smartTaylor_terms dumbTaylor_value dumbTaylor_terms
 // make sure to improve this t4able to include the required number of iterations
 // for each of the methods
 

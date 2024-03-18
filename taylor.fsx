@@ -12,12 +12,6 @@ let a = 0.0
 let b = 0.5
 let n = 10
 
-let rec pow a n =
-    match n with 
-    | 0 -> 1.0
-    | 1 -> a
-    | n -> a * pow a (n - 1)
-
 let rec whileLoop condition body state = 
     if condition state then
         let newState = body state
@@ -25,9 +19,15 @@ let rec whileLoop condition body state =
     else
         state
 
+let pown a n = 
+    let condition (_, i, n) = i <= n
+    let body (acc, i, _) = (acc * a, i + 1, n)
+    let (acc, _, _) = whileLoop condition body (1.0, 1, n)
+    acc
+
 // Define a function to compute f using naive taylor series method
 let taylor_naive x = 
-    let curr n x = float n * (float n + 2.0) * (pow x n)
+    let curr n x = float n * (float n + 2.0) * (pown x n)
 
     let condition (_, n) = curr n x > eps
     let body (acc, n) = ((curr n x) + acc, n + 1)

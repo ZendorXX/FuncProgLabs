@@ -9,15 +9,21 @@ let eps = 1e-5
 let dichotomy f a b = 
     let rec loop a b =
         let c = (a + b) / 2.0
-        if b - a < eps then c
-        else if f a * f c > 0.0 then loop c b
-        else loop a c
+        if b - a < eps then 
+            c
+        else 
+            if f a * f c > 0.0 then 
+                loop c b
+            else 
+                loop a c
     loop a b
 
 let iterations phi x0 = 
     let rec loop x = 
-        if abs ((phi x) - x) < eps then phi x
-        else loop (phi x)
+        if abs ((phi x) - x) < eps then 
+            phi x
+        else 
+            loop (phi x)
     loop x0
 
 let newthon f f' x0 = 
